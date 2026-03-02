@@ -1,0 +1,104 @@
+city,cost_one_person_usd,rent_one_person_usd,monthly_salary_after_tax_usd,income_after_rent_usd,months_covered,cost_one_person_inr,rent_one_person_inr,monthly_salary_after_tax_inr,income_after_rent_inr,usd_to_inr_rate_used,source_url
+Cost of Living in Andhra Pradesh,347.0,122.0,379.0,257.0,1.1,30488.74,10719.38,33300.38,22581.0,87.8638,https://livingcost.org/cost/india/ap
+Cost of Living in Vijayawada,333.0,106.0,550.0,444.0,1.6,29258.65,9313.56,48325.09,39011.53,87.8638,https://livingcost.org/cost/india/ap/vijayawada
+Cost of Living in Visakhapatnam,310.0,111.0,222.0,111.0,0.6,27237.78,9752.88,19505.76,9752.88,87.8638,https://livingcost.org/cost/india/ap/visakhapatnam
+Cost of Living in Assam,349.0,112.0,362.0,250.0,1.0,30664.47,9840.75,31806.7,21965.95,87.8638,https://livingcost.org/cost/india/as
+Cost of Living in Guwahati,348.0,110.0,354.0,244.0,1.0,30576.6,9665.02,31103.79,21438.77,87.8638,https://livingcost.org/cost/india/as/guwahati
+Cost of Living in Bihar,300.0,93.5,325.0,231.5,1.1,26359.14,8215.27,28555.74,20340.47,87.8638,https://livingcost.org/cost/india/br
+Cost of Living in Patna,320.0,103.0,313.0,210.0,1.0,28116.42,9049.97,27501.37,18451.4,87.8638,https://livingcost.org/cost/india/br/patna
+Cost of Living in Chhattisgarh,380.0,134.0,350.0,216.0,0.9,33388.24,11773.75,30752.33,18978.58,87.8638,https://livingcost.org/cost/india/ct
+Cost of Living in Raipur,445.0,164.0,340.0,176.0,0.8,39099.39,14409.66,29873.69,15464.03,87.8638,https://livingcost.org/cost/india/ct/raipur
+Cost of Living in Goa,440.0,202.0,204.0,2.0,0.5,38660.07,17748.49,17924.22,175.73,87.8638,https://livingcost.org/cost/india/ga
+Cost of Living in Gujarat,491.0,237.0,293.0,56.0,0.6,43141.13,20823.72,25744.09,4920.37,87.8638,https://livingcost.org/cost/india/gj
+Cost of Living in Ahmedabad,442.0,159.0,310.0,151.0,0.7,38835.8,13970.34,27237.78,13267.43,87.8638,https://livingcost.org/cost/india/gj/ahmedabad
+Cost of Living in Rajkot,324.0,104.0,216.0,112.0,0.7,28467.87,9137.84,18978.58,9840.75,87.8638,https://livingcost.org/cost/india/gj/rajkot
+Cost of Living in Surat,322.0,458.0,271.0,-187.0,0.4,28292.14,40241.62,23811.09,-16430.53,87.8638,https://livingcost.org/cost/india/gj/surat
+Cost of Living in Vadodara,374.0,129.0,349.0,220.0,0.9,32861.06,11334.43,30664.47,19330.04,87.8638,https://livingcost.org/cost/india/gj/vadodara
+Cost of Living in Himachal Pradesh,270.0,75.8,392.0,316.2,1.5,23723.23,6660.08,34442.61,27782.53,87.8638,https://livingcost.org/cost/india/hp
+Cost of Living in Haryana,476.0,184.0,264.0,80.0,0.6,41823.17,16166.94,23196.04,7029.1,87.8638,https://livingcost.org/cost/india/hr
+Cost of Living in Delhi,489.0,190.0,231.0,41.0,0.5,42965.4,16694.12,20296.54,3602.42,87.8638,https://livingcost.org/cost/india/hr/delhi
+Cost of Living in Faridabad,383.0,134.0,547.0,413.0,1.4,33651.84,11773.75,48061.5,36287.75,87.8638,https://livingcost.org/cost/india/hr/faridabad
+India vs Indonesia - Cost of Living Comparison,424.0,185.0,334.0,149.0,0.8,37254.25,16254.8,29346.51,13091.71,87.8638,https://livingcost.org/cost/india/indonesia
+India vs Iran - Cost of Living Comparison,424.0,185.0,334.0,149.0,0.8,37254.25,16254.8,29346.51,13091.71,87.8638,https://livingcost.org/cost/india/iran
+India vs Israel - Cost of Living Comparison,424.0,185.0,334.0,149.0,0.8,37254.25,16254.8,29346.51,13091.71,87.8638,https://livingcost.org/cost/india/israel
+India vs Italy - Cost of Living Comparison,424.0,185.0,334.0,149.0,0.8,37254.25,16254.8,29346.51,13091.71,87.8638,https://livingcost.org/cost/india/italy
+India vs Japan - Cost of Living Comparison,424.0,185.0,334.0,149.0,0.8,37254.25,16254.8,29346.51,13091.71,87.8638,https://livingcost.org/cost/india/japan
+Cost of Living in Jharkhand,335.0,100.0,308.0,208.0,0.9,29434.37,8786.38,27062.05,18275.67,87.8638,https://livingcost.org/cost/india/jh
+Cost of Living in Dhanbad,289.0,75.9,356.0,280.1,1.2,25392.64,6668.86,31279.51,24610.65,87.8638,https://livingcost.org/cost/india/jh/dhanbad
+Cost of Living in Jamshedpur,348.0,102.0,199.0,97.0,0.6,30576.6,8962.11,17484.9,8522.79,87.8638,https://livingcost.org/cost/india/jh/jamshedpur
+Cost of Living in Ranchi,332.0,121.0,401.0,280.0,1.1,29170.78,10631.52,35233.38,24601.86,87.8638,https://livingcost.org/cost/india/jh/ranchi
+Cost of Living in Jammu and Kashmir,321.0,96.3,276.0,179.7,0.9,28204.28,8461.28,24250.41,15789.12,87.8638,https://livingcost.org/cost/india/jk
+Cost of Living in Srinagar,340.0,99.9,211.0,111.1,0.6,29873.69,8777.59,18539.26,9761.67,87.8638,https://livingcost.org/cost/india/jk/srinagar
+Cost of Living in Karnataka,468.0,192.0,316.0,124.0,0.7,41120.26,16869.85,27764.96,10895.11,87.8638,https://livingcost.org/cost/india/ka
+Cost of Living in Bangalore,463.0,221.0,311.0,90.0,0.6,40680.94,19417.9,27325.64,7907.74,87.8638,https://livingcost.org/cost/india/ka/bangalore
+Cost of Living in Mysore,296.0,111.0,531.0,420.0,1.5,26007.68,9752.88,46655.68,36902.8,87.8638,https://livingcost.org/cost/india/ka/mysore
+India vs Kazakhstan - Cost of Living Comparison,424.0,185.0,334.0,149.0,0.8,37254.25,16254.8,29346.51,13091.71,87.8638,https://livingcost.org/cost/india/kazakhstan
+Cost of Living in Kerala,326.0,110.0,275.0,165.0,0.8,28643.6,9665.02,24162.54,14497.53,87.8638,https://livingcost.org/cost/india/kl
+India vs Malaysia - Cost of Living Comparison,424.0,185.0,334.0,149.0,0.8,37254.25,16254.8,29346.51,13091.71,87.8638,https://livingcost.org/cost/india/malaysia
+Cost of Living in Maharashtra,547.0,268.0,369.0,101.0,0.7,48061.5,23547.5,32421.74,8874.24,87.8638,https://livingcost.org/cost/india/mh
+Cost of Living in Aurangabad,355.0,114.0,459.0,345.0,1.3,31191.65,10016.47,40329.48,30313.01,87.8638,https://livingcost.org/cost/india/mh/aurangabad
+Cost of Living in Kalyan,305.0,160.0,633.0,473.0,1.6,26798.46,14058.21,55617.79,41559.58,87.8638,https://livingcost.org/cost/india/mh/kalyan
+Cost of Living in Mumbai,705.0,401.0,222.0,-179.0,0.3,61943.98,35233.38,19505.76,-15727.62,87.8638,https://livingcost.org/cost/india/mh/mumbai
+Cost of Living in Nagpur,291.0,227.0,293.0,66.0,0.5,25568.37,19945.08,25744.09,5799.01,87.8638,https://livingcost.org/cost/india/mh/nagpur
+Cost of Living in Nashik,350.0,114.0,561.0,447.0,1.6,30752.33,10016.47,49291.59,39275.12,87.8638,https://livingcost.org/cost/india/mh/nashik
+Cost of Living in Navi Mumbai,503.0,261.0,680.0,419.0,1.4,44195.49,22932.45,59747.38,36814.93,87.8638,https://livingcost.org/cost/india/mh/navi-mumbai
+Cost of Living in Pune,517.0,209.0,490.0,281.0,0.9,45425.58,18363.53,43053.26,24689.73,87.8638,https://livingcost.org/cost/india/mh/pune
+Cost of Living in Thane,487.0,233.0,629.0,396.0,1.3,42789.67,20472.27,55266.33,34794.06,87.8638,https://livingcost.org/cost/india/mh/thane
+Cost of Living in Meghalaya,354.0,169.0,199.0,30.0,0.6,31103.79,14848.98,17484.9,2635.91,87.8638,https://livingcost.org/cost/india/ml
+Cost of Living in Manipur,370.0,103.0,199.0,96.0,0.5,32509.61,9049.97,17484.9,8434.92,87.8638,https://livingcost.org/cost/india/mn
+Cost of Living in Madhya Pradesh,335.0,109.0,333.0,224.0,1.0,29434.37,9577.15,29258.65,19681.49,87.8638,https://livingcost.org/cost/india/mp
+Cost of Living in Bhopal,339.0,107.0,316.0,209.0,0.9,29785.83,9401.43,27764.96,18363.53,87.8638,https://livingcost.org/cost/india/mp/bhopal
+Cost of Living in Gwalior,329.0,111.0,360.0,249.0,1.1,28907.19,9752.88,31630.97,21878.09,87.8638,https://livingcost.org/cost/india/mp/gwalior
+Cost of Living in Indore,361.0,128.0,332.0,204.0,0.9,31718.83,11246.57,29170.78,17924.22,87.8638,https://livingcost.org/cost/india/mp/indore
+Cost of Living in Jabalpur,320.0,98.4,371.0,272.6,1.3,28116.42,8645.8,32597.47,23951.67,87.8638,https://livingcost.org/cost/india/mp/jabalpur
+India vs Myanmar - Cost of Living Comparison,424.0,185.0,334.0,149.0,0.8,37254.25,16254.8,29346.51,13091.71,87.8638,https://livingcost.org/cost/india/myanmar
+Cost of Living in Mizoram,456.0,143.0,347.0,204.0,0.8,40065.89,12564.52,30488.74,17924.22,87.8638,https://livingcost.org/cost/india/mz
+India vs Nepal - Cost of Living Comparison,424.0,185.0,334.0,149.0,0.8,37254.25,16254.8,29346.51,13091.71,87.8638,https://livingcost.org/cost/india/nepal
+India vs Netherlands - Cost of Living Comparison,424.0,185.0,334.0,149.0,0.8,37254.25,16254.8,29346.51,13091.71,87.8638,https://livingcost.org/cost/india/netherlands
+Cost of Living in Odisha,334.0,104.0,328.0,224.0,1.0,29346.51,9137.84,28819.33,19681.49,87.8638,https://livingcost.org/cost/india/or
+India vs Pakistan - Cost of Living Comparison,424.0,185.0,334.0,149.0,0.8,37254.25,16254.8,29346.51,13091.71,87.8638,https://livingcost.org/cost/india/pakistan
+Cost of Living in Punjab,380.0,136.0,383.0,247.0,1.0,33388.24,11949.48,33651.84,21702.36,87.8638,https://livingcost.org/cost/india/pb
+Cost of Living in Amritsar,380.0,129.0,346.0,217.0,0.9,33388.24,11334.43,30400.87,19066.44,87.8638,https://livingcost.org/cost/india/pb/amritsar
+Cost of Living in Chandigarh,427.0,139.0,331.0,192.0,0.9,37517.84,12213.07,29082.92,16869.85,87.8638,https://livingcost.org/cost/india/pb/chandigarh
+Cost of Living in Ludhiana,427.0,156.0,365.0,209.0,0.9,37517.84,13706.75,32070.29,18363.53,87.8638,https://livingcost.org/cost/india/pb/ludhiana
+India vs Philippines - Cost of Living Comparison,424.0,185.0,334.0,149.0,0.8,37254.25,16254.8,29346.51,13091.71,87.8638,https://livingcost.org/cost/india/philippines
+India vs Poland - Cost of Living Comparison,424.0,185.0,334.0,149.0,0.8,37254.25,16254.8,29346.51,13091.71,87.8638,https://livingcost.org/cost/india/poland
+Cost of Living in Puducherry,327.0,128.0,421.0,293.0,1.3,28731.46,11246.57,36990.66,25744.09,87.8638,https://livingcost.org/cost/india/py
+Cost of Living in Rajasthan,338.0,111.0,345.0,234.0,1.0,29697.96,9752.88,30313.01,20560.13,87.8638,https://livingcost.org/cost/india/rj
+Cost of Living in Jaipur,337.0,125.0,341.0,216.0,0.9,29610.1,10982.98,29961.56,18978.58,87.8638,https://livingcost.org/cost/india/rj/jaipur
+Cost of Living in Jodhpur,301.0,114.0,326.0,212.0,1.0,26447.0,10016.47,28643.6,18627.13,87.8638,https://livingcost.org/cost/india/rj/jodhpur
+"Cost of Living in Kota, Rajasthan",290.0,115.0,361.0,246.0,1.1,25480.5,10104.34,31718.83,21614.49,87.8638,https://livingcost.org/cost/india/rj/kota
+India vs Russia - Cost of Living Comparison,424.0,185.0,334.0,149.0,0.8,37254.25,16254.8,29346.51,13091.71,87.8638,https://livingcost.org/cost/india/russia
+India vs Saudi Arabia - Cost of Living Comparison,424.0,185.0,334.0,149.0,0.8,37254.25,16254.8,29346.51,13091.71,87.8638,https://livingcost.org/cost/india/saudi-arabia
+India vs Singapore - Cost of Living Comparison,424.0,185.0,334.0,149.0,0.8,37254.25,16254.8,29346.51,13091.71,87.8638,https://livingcost.org/cost/india/singapore
+India vs South Korea - Cost of Living Comparison,424.0,185.0,334.0,149.0,0.8,37254.25,16254.8,29346.51,13091.71,87.8638,https://livingcost.org/cost/india/south-korea
+India vs Spain - Cost of Living Comparison,424.0,185.0,334.0,149.0,0.8,37254.25,16254.8,29346.51,13091.71,87.8638,https://livingcost.org/cost/india/spain
+India vs Sri Lanka - Cost of Living Comparison,424.0,185.0,334.0,149.0,0.8,37254.25,16254.8,29346.51,13091.71,87.8638,https://livingcost.org/cost/india/sri-lanka
+India vs Switzerland - Cost of Living Comparison,424.0,185.0,334.0,149.0,0.8,37254.25,16254.8,29346.51,13091.71,87.8638,https://livingcost.org/cost/india/switzerland
+India vs Taiwan - Cost of Living Comparison,424.0,185.0,334.0,149.0,0.8,37254.25,16254.8,29346.51,13091.71,87.8638,https://livingcost.org/cost/india/taiwan
+Cost of Living in Telangana,444.0,163.0,304.0,141.0,0.7,39011.53,14321.8,26710.6,12388.8,87.8638,https://livingcost.org/cost/india/tg
+"Cost of Living in Hyderabad, Telangana",470.0,170.0,290.0,120.0,0.6,41295.99,14936.85,25480.5,10543.66,87.8638,https://livingcost.org/cost/india/tg/hyderabad
+India vs Thailand - Cost of Living Comparison,424.0,185.0,334.0,149.0,0.8,37254.25,16254.8,29346.51,13091.71,87.8638,https://livingcost.org/cost/india/thailand
+Cost of Living in Tamil Nadu,370.0,128.0,330.0,202.0,0.9,32509.61,11246.57,28995.05,17748.49,87.8638,https://livingcost.org/cost/india/tn
+Cost of Living in Chennai,470.0,159.0,321.0,162.0,0.7,41295.99,13970.34,28204.28,14233.94,87.8638,https://livingcost.org/cost/india/tn/chennai
+Cost of Living in Coimbatore,355.0,114.0,389.0,275.0,1.2,31191.65,10016.47,34179.02,24162.54,87.8638,https://livingcost.org/cost/india/tn/coimbatore
+Cost of Living in Madurai,646.0,97.4,322.0,224.6,0.9,56760.01,8557.93,28292.14,19734.21,87.8638,https://livingcost.org/cost/india/tn/madurai
+Cost of Living in Tripura,362.0,101.0,387.0,286.0,1.1,31806.7,8874.24,34003.29,25129.05,87.8638,https://livingcost.org/cost/india/tr
+India vs Turkey - Cost of Living Comparison,424.0,185.0,334.0,149.0,0.8,37254.25,16254.8,29346.51,13091.71,87.8638,https://livingcost.org/cost/india/turkey
+India vs United Arab Emirates - Cost of Living Comparison,424.0,185.0,334.0,149.0,0.8,37254.25,16254.8,29346.51,13091.71,87.8638,https://livingcost.org/cost/india/united-arab-emirates
+India vs United Kingdom - Cost of Living Comparison,424.0,185.0,334.0,149.0,0.8,37254.25,16254.8,29346.51,13091.71,87.8638,https://livingcost.org/cost/india/united-kingdom
+India vs United States - Cost of Living Comparison,424.0,185.0,334.0,149.0,0.8,37254.25,16254.8,29346.51,13091.71,87.8638,https://livingcost.org/cost/india/united-states
+Cost of Living in Uttar Pradesh,329.0,107.0,419.0,312.0,1.3,28907.19,9401.43,36814.93,27413.51,87.8638,https://livingcost.org/cost/india/up
+Cost of Living in Agra,264.0,109.0,564.0,455.0,1.5,23196.04,9577.15,49555.18,39978.03,87.8638,https://livingcost.org/cost/india/up/agra
+Cost of Living in Allahabad,386.0,105.0,387.0,282.0,1.3,33915.43,9225.7,34003.29,24777.59,87.8638,https://livingcost.org/cost/india/up/allahabad
+Cost of Living in Ghaziabad,372.0,119.0,454.0,335.0,1.2,32685.33,10455.79,39890.17,29434.37,87.8638,https://livingcost.org/cost/india/up/ghaziabad
+Cost of Living in Kanpur,320.0,99.6,432.0,332.4,1.3,28116.42,8751.23,37957.16,29205.93,87.8638,https://livingcost.org/cost/india/up/kanpur
+Cost of Living in Lucknow,386.0,113.0,352.0,239.0,1.0,33915.43,9928.61,30928.06,20999.45,87.8638,https://livingcost.org/cost/india/up/lucknow
+Cost of Living in Meerut,350.0,135.0,559.0,424.0,1.6,30752.33,11861.61,49115.86,37254.25,87.8638,https://livingcost.org/cost/india/up/meerut
+Cost of Living in Varanasi,273.0,74.7,356.0,281.3,1.3,23986.82,6563.43,31279.51,24716.09,87.8638,https://livingcost.org/cost/india/up/varanasi
+Cost of Living in Uttarakhand,386.0,158.0,225.0,67.0,0.6,33915.43,13882.48,19769.35,5886.87,87.8638,https://livingcost.org/cost/india/ut
+India vs Uzbekistan - Cost of Living Comparison,424.0,185.0,334.0,149.0,0.8,37254.25,16254.8,29346.51,13091.71,87.8638,https://livingcost.org/cost/india/uzbekistan
+India vs Vietnam - Cost of Living Comparison,424.0,185.0,334.0,149.0,0.8,37254.25,16254.8,29346.51,13091.71,87.8638,https://livingcost.org/cost/india/vietnam
+Cost of Living in West Bengal,330.0,113.0,366.0,253.0,1.1,28995.05,9928.61,32158.15,22229.54,87.8638,https://livingcost.org/cost/india/wb
+Cost of Living in Howrah,301.0,114.0,455.0,341.0,1.4,26447.0,10016.47,39978.03,29961.56,87.8638,https://livingcost.org/cost/india/wb/howrah
+Cost of Living in Kolkata,301.0,121.0,354.0,233.0,1.0,26447.0,10631.52,31103.79,20472.27,87.8638,https://livingcost.org/cost/india/wb/kolkata
