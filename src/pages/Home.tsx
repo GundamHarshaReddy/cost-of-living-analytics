@@ -15,6 +15,7 @@ import StressIndicator from '../components/StressIndicator';
 import LoadingState from '../components/LoadingState';
 import ErrorState from '../components/ErrorState';
 import AIChatBot from '../components/AIChatBot';
+import ComparisonTable from '../components/ComparisonTable';
 
 interface CityData {
   city: string;
@@ -36,9 +37,21 @@ const Home: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [isChatOpen, setIsChatOpen] = useState(false);
 
+  // Simulator State
+  const [customSalary, setCustomSalary] = useState<number | null>(null);
+  const [customRent, setCustomRent] = useState<number | null>(null);
+
+  // Compare State
+  const [isCompareMode, setIsCompareMode] = useState(false);
+  const [compareCity, setCompareCity] = useState<string>('hyderabad');
+  const [compareData, setCompareData] = useState<CityData | null>(null);
+  const [compareLoading, setCompareLoading] = useState(false);
+
   const fetchData = useCallback(async (city: string) => {
     setLoading(true);
     setError(null);
+    setCustomSalary(null); // Reset simulator on city change
+    setCustomRent(null);
     try {
       const response = await fetch(`${API_BASE_URL}/city/${city}`);
       if (!response.ok) {
@@ -58,9 +71,43 @@ const Home: React.FC = () => {
     fetchData(selectedCity);
   }, [selectedCity, fetchData]);
 
+  const fetchCompareData = useCallback(async (city: string) => {
+    setCompareLoading(true);
+    try {
+      const response = await fetch(`${API_BASE_URL}/city/${city}`);
+      if (response.ok) {
+        const result = await response.json();
+        setCompareData(result);
+      }
+    } catch (err) {
+      setCompareData(null);
+    } finally {
+      setCompareLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isCompareMode) {
+      fetchCompareData(compareCity);
+    }
+  }, [compareCity, isCompareMode, fetchCompareData]);
+
   const handleRetry = () => {
     fetchData(selectedCity);
   };
+
+  // Dynamic calculations for Simulator
+  const displaySalary = customSalary !== null ? customSalary : data?.monthly_salary_after_tax_inr || 0;
+  const displayRent = customRent !== null ? customRent : data?.rent_one_person_inr || 0;
+  const displayIncomeAfterRent = displaySalary - displayRent;
+  const displayStressScore = displaySalary > 0 ? displayRent / displaySalary : 0;
+  
+  let displayStressLevel: 'Low' | 'Moderate' | 'High' = 'High';
+  if (displayStressScore === 0) displayStressLevel = 'Moderate';
+  else if (displayStressScore < 0.3) displayStressLevel = 'Low';
+  else if (displayStressScore <= 0.5) displayStressLevel = 'Moderate';
+  
+  const displayMonthsCovered = data?.cost_one_person_inr ? Math.round((displaySalary / data.cost_one_person_inr) * 10) / 10 : 0;
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
@@ -96,11 +143,28 @@ const Home: React.FC = () => {
               Detailed breakdown for <span className="font-semibold text-indigo-600 capitalize">{selectedCity}</span>
             </p>
           </div>
-          <CitySelector
-            selectedCity={selectedCity}
-            onCityChange={setSelectedCity}
-            isLoading={loading}
-          />
+          <div className="flex flex-col sm:flex-row items-center gap-4">
+            <CitySelector
+              selectedCity={selectedCity}
+              onCityChange={setSelectedCity}
+              isLoading={loading}
+            />
+            <button
+              onClick={() => setIsCompareMode(!isCompareMode)}
+              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                isCompareMode ? 'bg-indigo-100 text-indigo-700' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              {isCompareMode ? 'Disable Compare' : 'Compare City'}
+            </button>
+            {isCompareMode && (
+              <CitySelector
+                selectedCity={compareCity}
+                onCityChange={setCompareCity}
+                isLoading={compareLoading}
+              />
+            )}
+          </div>
         </div>
 
         {loading ? (
@@ -119,25 +183,69 @@ const Home: React.FC = () => {
               />
               <MetricCard
                 title="Rent Cost"
-                value={`₹${data.rent_one_person_inr.toLocaleString()}`}
+                value={`₹${displayRent.toLocaleString()}`}
                 icon={HomeIcon}
-                trend="1 BHK in City Centre"
-                trendType="neutral"
+                trend={customRent !== null ? "Custom Simulator Rent" : "1 BHK in City Centre"}
+                trendType={customRent !== null ? "positive" : "neutral"}
               />
               <MetricCard
                 title="Monthly Salary (Net)"
-                value={`₹${data.monthly_salary_after_tax_inr.toLocaleString()}`}
+                value={`₹${displaySalary.toLocaleString()}`}
                 icon={Wallet}
-                trend="Average after tax"
-                trendType="positive"
+                trend={customSalary !== null ? "Custom Simulator Salary" : "Average after tax"}
+                trendType={customSalary !== null ? "positive" : "positive"}
               />
               <MetricCard
                 title="Income After Rent"
-                value={`₹${data.income_after_rent_inr.toLocaleString()}`}
+                value={`₹${displayIncomeAfterRent.toLocaleString()}`}
                 icon={TrendingDown}
                 trend="Disposable income"
-                trendType={data.income_after_rent_inr > 0 ? 'positive' : 'negative'}
+                trendType={displayIncomeAfterRent > 0 ? 'positive' : 'negative'}
               />
+            </div>
+
+            {/* Simulator Controls */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 animate-fade-in-up">
+               <h3 className="text-xl font-bold text-gray-900 mb-4">Interactive Simulator</h3>
+               <p className="text-sm text-gray-500 mb-6">Adjust your expected salary and rent to see how it impacts your financial stress and savings.</p>
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Adjust Monthly Salary: ₹{displaySalary.toLocaleString()}
+                    </label>
+                    <input 
+                      type="range" 
+                      min="10000" 
+                      max="300000" 
+                      step="5000"
+                      value={displaySalary}
+                      onChange={(e) => setCustomSalary(Number(e.target.value))}
+                      className="w-full h-2 bg-indigo-100 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                    />
+                    <div className="flex justify-between text-xs text-gray-400 mt-1">
+                      <span>₹10K</span>
+                      <span>₹3L+</span>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Adjust Rent (1 BHK): ₹{displayRent.toLocaleString()}
+                    </label>
+                    <input 
+                      type="range" 
+                      min="5000" 
+                      max="100000" 
+                      step="1000"
+                      value={displayRent}
+                      onChange={(e) => setCustomRent(Number(e.target.value))}
+                      className="w-full h-2 bg-violet-100 rounded-lg appearance-none cursor-pointer accent-violet-600"
+                    />
+                    <div className="flex justify-between text-xs text-gray-400 mt-1">
+                      <span>₹5K</span>
+                      <span>₹1L+</span>
+                    </div>
+                  </div>
+               </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -152,11 +260,11 @@ const Home: React.FC = () => {
                       <div>
                         <span className="text-sm font-semibold text-blue-600 uppercase tracking-wider">Months Covered</span>
                         <h4 className="text-4xl font-extrabold text-blue-900 mt-2">
-                          {data.months_covered}
+                          {displayMonthsCovered}
                         </h4>
                       </div>
                       <p className="text-sm text-blue-700 mt-4 leading-relaxed">
-                        Based on the average salary versus cost of living, you could survive for this many months on one month's salary with zero expenses, or this is your savings potential ratio.
+                        Based on the salary versus cost of living, you could survive for this many months on one month's salary with zero expenses, or this is your savings potential ratio.
                       </p>
                     </div>
                   </div>
@@ -178,11 +286,15 @@ const Home: React.FC = () => {
 
               <div className="lg:col-span-1">
                 <StressIndicator
-                  stressScore={data.stress_score}
-                  stressLevel={data.stress_level}
+                  stressScore={displayStressScore}
+                  stressLevel={displayStressLevel}
                 />
               </div>
             </div>
+
+            {isCompareMode && compareData && (
+              <ComparisonTable baseData={data} compareData={compareData} />
+            )}
           </div>
         ) : null}
       </main>
@@ -194,6 +306,7 @@ const Home: React.FC = () => {
         cityContext={data?.city}
         rentContext={data?.rent_one_person_inr}
         salaryContext={data?.monthly_salary_after_tax_inr}
+        onCitySelect={setSelectedCity}
       />
 
       <button

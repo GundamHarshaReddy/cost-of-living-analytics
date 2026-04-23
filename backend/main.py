@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import pandas as pd
 import os
 import logging
+import json
 from typing import List, Dict, Optional, Any
 from dotenv import load_dotenv
 from groq import Groq
@@ -199,57 +200,183 @@ async def get_city_data(city: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+def find_city_in_csv(city_name: str) -> Optional[Dict]:
+    """Look up a city in the CSV and return its data"""
+    df = load_and_process_csv()
+    if df.empty:
+        return None
+    city_clean = clean_city_name(city_name)
+    matches = df[df["city"].str.contains(city_clean, case=False, na=False)]
+    if not matches.empty:
+        row = matches.iloc[0]
+        return {
+            "city": row.get("city", city_clean),
+            "rent": row.get("rent_one_person_inr", 0),
+            "salary": row.get("monthly_salary_after_tax_inr", 0),
+            "cost": row.get("cost_one_person_inr", 0),
+            "income_after_rent": row.get("income_after_rent_inr", 0),
+        }
+    return None
+
+# List of known city names from CSV for matching
+KNOWN_CITIES = [
+    "bangalore", "mumbai", "delhi", "hyderabad", "chennai", "pune", "kolkata",
+    "ahmedabad", "jaipur", "lucknow", "surat", "goa", "chandigarh", "indore",
+    "bhopal", "nagpur", "coimbatore", "mysore", "vadodara", "rajkot", "patna",
+    "ranchi", "guwahati", "srinagar", "jodhpur", "agra", "varanasi", "ludhiana",
+    "amritsar", "nashik", "thane", "faridabad", "ghaziabad", "meerut", "kanpur",
+    "raipur", "madurai", "aurangabad", "navi mumbai", "howrah", "kalyan",
+    "vijayawada", "visakhapatnam", "kota", "dhanbad", "jamshedpur", "jabalpur",
+    "gwalior", "allahabad",
+]
+
+def detect_mentioned_cities(message: str, current_city: Optional[str] = None) -> List[str]:
+    """Detect city names mentioned in the user message"""
+    message_lower = message.lower()
+    mentioned = []
+    for city in KNOWN_CITIES:
+        if city in message_lower and city != (current_city or "").lower():
+            mentioned.append(city)
+    return mentioned
+
+
 @app.post("/api/chat")
 async def chat_with_ai(
     message: str = Body(..., embed=True),
-    context: Optional[Dict] = Body(None, embed=True)
+    context: Optional[Dict] = Body(None, embed=True),
+    history: Optional[List[Dict]] = Body(None, embed=True),
 ):
-    """Chat endpoint using Groq API"""
+    """Chat endpoint using Groq API with conversation history and markdown formatting"""
     if not groq_client:
-        return {"response": "I'm sorry, my AI brain isn't connected right now. Please set the GROQ_API_KEY in the backend configuration."}
+        return {"response": "I'm sorry, my AI brain isn't connected right now. Please set the `GROQ_API_KEY` in the backend configuration."}
 
     try:
-        # Construct system prompt with context
-        system_prompt = (
-            "You are a strict financial advisor specializing in cost-of-living analysis for Indian cities. "
-            "You MUST ONLY answer questions related to cost of living, rent, salary, affordability, and financial planning in India. "
-            "If a user asks about anything else (like general knowledge, coding, or personal questions), politely refuse and steer them back to finances. "
-            "Provide quantitative analysis where possible."
+        # ── Base formatting instructions ──
+        formatting_rules = (
+            "\n\n## RESPONSE FORMATTING RULES (VERY IMPORTANT):\n"
+            "- Use **Markdown** formatting in your 'response' value.\n"
+            "- Use **bold** for key numbers and important terms.\n"
+            "- Use bullet points (- ) for lists and breakdowns.\n"
+            "- Use ### headers to separate sections in longer answers.\n"
+            "- When comparing cities, use a markdown table like:\n"
+            "  | Metric | City A | City B |\n"
+            "  |--------|--------|--------|\n"
+            "  | Rent   | ₹X     | ₹Y     |\n"
+            "- When giving a budget/savings plan, format as a clear breakdown:\n"
+            "  - **Rent**: ₹X\n"
+            "  - **Food**: ₹X\n"
+            "  - **Transport**: ₹X\n"
+            "  - **Savings**: ₹X\n"
+            "- Keep responses concise but well-structured. Aim for 150-400 words.\n"
+            "- End with a helpful follow-up question or suggestion.\n"
         )
-        
+
+        # ── Off-topic guard ──
+        offtopic_refuse_msg = (
+            "I'm your **Cost-of-Living Financial Advisor** \U0001f3e6 — "
+            "I can only help with questions about rent, salary, savings, city comparisons, "
+            "and budget planning in India. Try asking me something like:\\n\\n"
+            "- *What's the cost of living in Mumbai?*\\n"
+            "- *Compare Bangalore vs Hyderabad*\\n"
+            "- *Create a savings plan for me*"
+        )
+        offtopic_guard = (
+            "\n\n## STRICT TOPIC GUARD:\n"
+            "You are ONLY allowed to discuss: cost of living, rent, salary, housing, savings, "
+            "budget planning, financial stress, city affordability, and city comparisons in India.\n"
+            "If the user asks about ANYTHING else (jokes, coding, general knowledge, weather, sports, "
+            "personal questions, etc.), you MUST refuse politely. Use this message as the 'response' value: "
+            f"{offtopic_refuse_msg}\n"
+            "Set 'target_city' to null. Do NOT attempt to answer off-topic questions, even partially.\n"
+        )
+
+        # ── JSON output instruction ──
+        json_instruction = (
+            "\n\n## OUTPUT FORMAT:\n"
+            "You MUST respond ONLY with a valid JSON object containing exactly two keys:\n"
+            "- 'response': your message in **Markdown format**\n"
+            "- 'target_city': the city name in lowercase if the user is asking about a DIFFERENT city than the current context, otherwise null\n"
+        )
+
+        # ── Build system prompt based on context ──
         if context and context.get('city'):
             city = context.get('city')
             rent = context.get('rent', 0)
             salary = context.get('salary', 0)
             savings_est = float(salary) - float(rent)
+            
             system_prompt = (
-                f"You are an intelligent financial advisor for Indian cities. "
-                f"CONTEXT: The user is currently viewing data for '{city}' (Rent: ₹{rent}, Salary: ₹{salary}). "
-                "IMPORTANT INSTRUCTIONS:\n"
-                "1. If the user asks about the CURRENT city ({city}), use the provided data numbers exactly.\n"
-                "2. If the user asks about a DIFFERENT city (e.g., Hyderabad, Mumbai), IGNORE the dashboard data. Instead, use your own internal knowledge to provide specific, realistic numbers and a detailed plan for that requested city. Do NOT apologize for not having dashboard data. Just answer helpfuly.\n"
-                "3. If the user asks for a 'Personalized Plan', ask for their income/lifestyle ONLY if you don't have enough info. If they just say 'plan for Hyderabad', assume a typical middle-class scenario (e.g., ₹50k-80k salary) and give a sample breakdown first, then ask for their specifics to refine it.\n"
-                "4. Be confident and direct. Do not keep repeating 'I am viewing the dashboard for X'.\n"
+                f"You are an expert financial advisor AI specializing in cost-of-living analysis for Indian cities.\n\n"
+                f"## CURRENT DASHBOARD CONTEXT:\n"
+                f"- **City**: {city}\n"
+                f"- **Average Rent (1BHK)**: ₹{rent:,.0f}\n"
+                f"- **Average Salary (after tax)**: ₹{salary:,.0f}\n"
+                f"- **Estimated Savings (Salary - Rent)**: ₹{savings_est:,.0f}\n\n"
+                f"## INSTRUCTIONS:\n"
+                f"1. If the user asks about **{city}**, use the dashboard data above.\n"
+                f"2. If the user asks about a DIFFERENT city, use the REAL DATA provided below (if available), NOT your internal guesses.\n"
+                f"3. Be confident, specific, and data-driven. Never say 'I don't have data'.\n"
+                f"4. For personalized plans, if they don't give income info, use the dashboard salary as a starting point.\n"
+            )
+        else:
+            system_prompt = (
+                "You are an expert financial advisor AI specializing in cost-of-living analysis for Indian cities.\n"
+                "Help users understand costs, compare cities, and plan their finances.\n"
+                "Be data-driven and specific with numbers.\n"
             )
 
-        # If user message asks for savings, explicitly calculate it
+        # ── Inject real CSV data for mentioned cities ──
+        mentioned_cities = detect_mentioned_cities(message, context.get('city') if context else None)
+        if mentioned_cities:
+            system_prompt += "\n## REAL DATA FOR MENTIONED CITIES:\n"
+            for mc in mentioned_cities[:3]:  # Limit to 3 cities
+                city_data = find_city_in_csv(mc)
+                if city_data:
+                    system_prompt += (
+                        f"\n### {city_data['city'].title()}:\n"
+                        f"- Rent (1BHK): ₹{city_data['rent']:,.0f}\n"
+                        f"- Salary (after tax): ₹{city_data['salary']:,.0f}\n"
+                        f"- Total Cost of Living: ₹{city_data['cost']:,.0f}\n"
+                        f"- Income After Rent: ₹{city_data['income_after_rent']:,.0f}\n"
+                    )
+
+        # If user asks about savings, calculate explicitly
         if "savings" in message.lower() and context and context.get('salary') and context.get('rent'):
-             savings = context.get('salary') - context.get('rent')
-             system_prompt += f"\nNote: The estimated monthly savings (Salary - Rent) is ₹{savings}."
+            savings = context.get('salary') - context.get('rent')
+            system_prompt += f"\n**Note**: Estimated monthly savings (Salary - Rent) = ₹{savings:,.0f}\n"
+
+        # Append formatting rules, off-topic guard, and JSON instruction
+        system_prompt += formatting_rules + offtopic_guard + json_instruction
+
+        # ── Build message list with conversation history ──
+        messages = [{"role": "system", "content": system_prompt}]
+        
+        if history:
+            # Include last 10 messages for context (skip system messages)
+            for msg in history[-10:]:
+                role = msg.get("role", "user")
+                content = msg.get("content", "")
+                if role in ("user", "assistant") and content:
+                    messages.append({"role": role, "content": content})
+        
+        messages.append({"role": "user", "content": message})
 
         completion = groq_client.chat.completions.create(
             model="llama-3.3-70b-versatile",
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": message}
-            ],
+            messages=messages,
             temperature=0.7,
-            max_tokens=300,
+            max_tokens=800,
+            response_format={"type": "json_object"}
         )
-        return {"response": completion.choices[0].message.content}
+        content = completion.choices[0].message.content
+        try:
+            parsed = json.loads(content)
+            return {"response": parsed.get("response", content), "target_city": parsed.get("target_city")}
+        except json.JSONDecodeError:
+            return {"response": content, "target_city": None}
     except Exception as e:
          logger.error(f"Groq API Error: {e}")
-         return {"response": f"I'm encountering an error: {str(e)}. Please check my API key configuration."}
+         return {"response": f"⚠️ I'm encountering an error: `{str(e)}`. Please check the API key configuration."}
 
 @app.get("/health")
 async def health_check():
